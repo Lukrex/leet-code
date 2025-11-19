@@ -1,0 +1,31 @@
+# My O(n) solution
+```py
+class Solution:
+    def findMaxAverage(self, nums: List[int], k: int) -> float:
+        left = sum = biggest = 0
+        for right in range(len(nums)):
+            sum += nums[right]
+            if right-left+1 > k:
+                sum -= nums[left]
+                left += 1
+            if right-left+1 == k:
+                if not biggest:
+                    biggest = sum/k
+                else:
+                    biggest = max(biggest, sum/k)
+        return biggest
+```
+- - -
+# AI optimized solution
+- it starts with the sum of the initial window, and then cycles from k to the end
+```py
+class Solution:
+    def findMaxAverage(self, nums, k):
+        window = sum(nums[:k])
+        best = window
+        for i in range(k, len(nums)):
+            window += nums[i] - nums[i-k]
+            if window > best:
+                best = window
+        return best / k
+```
