@@ -1,0 +1,23 @@
+# My 0ms O(n) sliding window solution
+```py
+class Solution:
+    def decrypt(self, code: List[int], k: int) -> List[int]:
+        res = list()
+        if k < 0:
+            sums = sum(code[k-1:-1])
+            for right in range(len(code)-1, 2*len(code)-1):
+                if right > len(code)-1:
+                    right -= len(code)
+                sums += code[right]
+                sums -= code[right+k]
+                res.append(sums)
+        else:
+            sums = sum(code[:k])
+            for right in range(k, k+len(code)):
+                if right > len(code)-1:
+                    right -= len(code)
+                sums += code[right]
+                sums -= code[right-k]
+                res.append(sums)
+        return res
+```
